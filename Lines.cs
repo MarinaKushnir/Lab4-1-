@@ -1,64 +1,66 @@
-﻿namespace Lab4_1_
+namespace Lab4_1_
 {
     public class Lines
     {
-        int xa;
-        int ya;
-        int xb;
-        int yb;
-        int xc;
-        int yc;
-        int xd;
-        int yd;
-        public Lines(int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd)
+
+        int x1, y1, x2, y2;
+
+        public Lines(int x1, int y1, int x2, int y2)
         {
-            this.xa = xa;
-            this.ya = ya;
-            this.xb = xb;
-            this.yb = yb;
-            this.xc = xc;
-            this.yc = yc;
-            this.xd = xd;
-            this.yd = yd;
-
-            System.Console.WriteLine($"Уровнение прямой AB:y-{ya}/{yb}-{ya}=x-{xa}/{xb}-{xa}");
-            System.Console.WriteLine($"Уровнение прямой AB:y-{yc}/{yd}-{yc}=x-{xc}/{xd}-{xc}");
-
-            bool parallel = Parallel(xa, ya, xb, yb, xc, yc, xd, yd);
-            if (parallel == true)
-            {
-                System.Console.WriteLine($"Прямые AB и CD параллельны");
-            }
-            else
-            {
-                System.Console.WriteLine($"Прямые AB и CD не параллельны");
-
-                double angle = CalculateAngle(xa, ya, xb, yb, xc, yc, xd, yd);
-                System.Console.WriteLine($"Угол между прямыми AB и CD: {angle} градусов.");
-            }
+            this.x1 = x1;
+            this.y1 = y1;
+            this.x2 = x2;
+            this.y2 = y2;
         }
 
-        static bool Parallel(int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd)
+        int c = 0;
+        
+
+        public void Equation()
         {
-            if (xb - xa == 0 && xd - xc == 0 && yb - ya == yd - yc || yb - ya == 0 && yd - yc == 0 && xb - xa == xd - xc || ((yb - ya) / (xb - xa)) - ((yd - yc) / (xd - xc)) is 0)
-            { return true; }
-            if (xb - xa is 0 && xd - xc != 0 || xb - xa != 0 && xd - xc is 0 || yb - ya is 0 && yd - yc != 0 || yb - ya != 0 && yd - yc is 0)
-            { return false; }
-            else { return false; }
+            System.Console.WriteLine($"y = {K}x + {B}.");
+        }
+
+        private double X 
+        {
+            get { return x2 - x1; }
 
         }
 
-        static double CalculateAngle(int xa, int ya, int xb, int yb, int xc, int yc, int xd, int yd)
+        private double Y 
         {
-            double angle1 = System.Math.Atan2(yb - ya, xb - xa) * 180 / System.Math.PI;
-            double angle2 = System.Math.Atan2(yd - yc, xd - xc) * 180 / System.Math.PI;
-
-            double angle = angle1 - angle2;
-            if (angle > 180)
-            {
-                angle = 360 - angle;
-            }
-            return angle;
+            get { return y2 - y1; }
         }
+
+
+        private double K //K и B элементы для уравнения прямой y=kx+b
+        {
+            get { return Y / X; }
+            
+        }
+
+        private double B
+        {
+            get { return y1 - K * x1; }
+        }
+
+        public static bool operator ==(Lines AB, Lines CD)
+        {
+            
+            return AB.K == CD.K;
+        }
+
+        public static bool operator !=(Lines AB, Lines CD)
+        {
+            return !(AB == CD);
+        }
+
+        public static double Angle(Lines AB, Lines CD)
+        {
+            double slopeDifference = CD.K - AB.K;
+            double angle = System.Math.Atan(slopeDifference / (1 + AB.K * CD.K));
+            return angle * (180 / System.Math.PI);
+        }
+       
     }
 }
