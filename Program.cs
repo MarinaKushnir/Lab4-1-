@@ -14,9 +14,17 @@ namespace Lab4_1_
             Console.WriteLine("Уровнение прямой CD:");
             CD.Equation();
 
-            Console.WriteLine("Прямые AB и CD не параллельны.");
-            double angle = Lines.Angle(AB, CD);
-            Console.WriteLine($"Угол между прямыми AB и CD: {angle} градусов.");
+            if (AB == CD )
+            {
+                Console.WriteLine($"Прямые AB и CD параллельны.");
+            }
+            else
+            {
+                Console.WriteLine("Прямые AB и CD не параллельны.");
+                double angle = Lines.Angle(AB, CD);
+                Console.WriteLine($"Угол между прямыми AB и CD: {angle} градусов.");
+            }
+
         }
     }
 }
